@@ -77,7 +77,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-*.vcxproj
 Server_Project/Debug/vc140.pdb
 *.idb
 Server_Project/Server_Project.vcxproj.filters
