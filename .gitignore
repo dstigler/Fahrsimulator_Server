@@ -77,3 +77,13 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.vcxproj
+Server_Project/Debug/vc140.pdb
+*.idb
+Server_Project/Server_Project.vcxproj.filters
+*.tlog
+Server_Project/Debug/Server_Project.log
+*.suo
+Debug/Server_Project.ilk
+*.pdb
+*.db
