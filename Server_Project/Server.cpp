@@ -13,11 +13,16 @@
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "Ws2_32.lib")
 
+#define REVBUFFLEN 8142
+
 int wmain(void) {
 
 	//----------------------
 	// Initialize Winsock.
 	bool run = true;
+	
+	char recvBuffer[REVBUFFLEN];
+
 	WSADATA wsaData;
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != NO_ERROR) {
@@ -82,7 +87,8 @@ int wmain(void) {
 		{
 			wprintf(L"Client connected.\n");
 			send(AcceptSocket, msg.c_str(), msg.length() + 1, MSG_OOB);
-		
+			recv(AcceptSocket, recvBuffer, REVBUFFLEN, 0);
+			std::cout << "Received: " << std::string(recvBuffer) << std::endl;
 		}
 	}
 	// No longer need server socket
