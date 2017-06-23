@@ -6,6 +6,8 @@
 #include <winsock2.h>
 #include <stdio.h>
 #include <windows.h>
+#include <string>
+#include <iostream>
 
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "Ws2_32.lib")
@@ -14,6 +16,7 @@ int wmain(void) {
 
 	//----------------------
 	// Initialize Winsock.
+	bool run = true;
 	WSADATA wsaData;
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != NO_ERROR) {
@@ -61,23 +64,29 @@ int wmain(void) {
 
 	//----------------------
 	// Accept the connection.
-	AcceptSocket = accept(ListenSocket, NULL, NULL);
-	if (AcceptSocket == INVALID_SOCKET) {
-		wprintf(L"accept failed with error: %ld\n", WSAGetLastError());
-		closesocket(ListenSocket);
-		WSACleanup();
-		return 1;
-	}
-	else
-	{
-		wprintf(L"Client connected.\n");
 	
-		
-	}
+	std::string msg = "Hallo there!";
+	while (run) {
 
+	AcceptSocket = accept(ListenSocket, NULL, NULL);
+	
+		if (AcceptSocket == INVALID_SOCKET) {
+			wprintf(L"accept failed with error: %ld\n", WSAGetLastError());
+			closesocket(ListenSocket);
+			WSACleanup();
+			return 1;
+		}
+		else
+		{
+			wprintf(L"Client connected.\n");
+			send(AcceptSocket, msg.c_str(), sizeof(msg.c_str()), MSG_OOB);
+		
+		}
+	}
 	// No longer need server socket
 	closesocket(ListenSocket);
-
+	std::cout << "Connection closed" << std::endl;
+	std::cin;
 	WSACleanup();
 	return 0;
 }
