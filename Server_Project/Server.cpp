@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include <thread>
+#include <vector>
 
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "Ws2_32.lib")
@@ -19,7 +20,9 @@ int startServer()
 	bool run = true;
 
 	char recvBuffer[REVBUFFLEN];
-
+	std::vector<std::string> points = { "P1:127.531/48.848/17.8"
+					, "P2:83.939/392.19/3.123"
+					, "P3:91.930/201.83/91.872" };
 	WSADATA wsaData;
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (iResult != NO_ERROR)
@@ -88,9 +91,14 @@ int startServer()
 		else
 		{
 			wprintf(L"Client connected.\n");
-			send(AcceptSocket, msg.c_str(), msg.length() + 1, MSG_OOB);
+			
 			recv(AcceptSocket, recvBuffer, REVBUFFLEN, 0);
 			std::cout << "Received: " << std::string(recvBuffer) << std::endl;
+
+			for (auto s : points) {
+				send(AcceptSocket, s.c_str(), s.length() + 1, MSG_OOB);
+			}
+			
 		}
 	}
 	// No longer need server socket
