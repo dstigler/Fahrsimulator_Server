@@ -87,3 +87,6 @@ Debug/Server_Project.ilk
 *.pdb
 *.db
 *.opendb
+Server_Project/x64/Debug/Server_Project.log
+*.ilk
+Server_Project/Server_Project.vcxproj.user
