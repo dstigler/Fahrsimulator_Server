@@ -66,6 +66,7 @@ int wmain(void) {
 	// Accept the connection.
 	
 	std::string msg = "Hallo there!";
+
 	while (run) {
 
 	AcceptSocket = accept(ListenSocket, NULL, NULL);
@@ -79,7 +80,7 @@ int wmain(void) {
 		else
 		{
 			wprintf(L"Client connected.\n");
-			send(AcceptSocket, msg.c_str(), sizeof(msg.c_str()), MSG_OOB);
+			send(AcceptSocket, msg.c_str(), msg.length() + 1, MSG_OOB);
 		
 		}
 	}
