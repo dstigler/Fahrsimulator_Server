@@ -13,9 +13,8 @@
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "Ws2_32.lib")
 
-int wmain(void) {
-
-	//----------------------
+int startServer()
+{
 	// Initialize Winsock.
 	bool run = true;
 	WSADATA wsaData;
@@ -65,13 +64,13 @@ int wmain(void) {
 
 	//----------------------
 	// Accept the connection.
-	
+
 	std::string msg = "Hallo there!";
 
 	while (run) {
 
-	AcceptSocket = accept(ListenSocket, NULL, NULL);
-	
+		AcceptSocket = accept(ListenSocket, NULL, NULL);
+
 		if (AcceptSocket == INVALID_SOCKET) {
 			wprintf(L"accept failed with error: %ld\n", WSAGetLastError());
 			closesocket(ListenSocket);
@@ -82,7 +81,7 @@ int wmain(void) {
 		{
 			wprintf(L"Client connected.\n");
 			send(AcceptSocket, msg.c_str(), msg.length() + 1, MSG_OOB);
-		
+
 		}
 	}
 	// No longer need server socket
@@ -91,4 +90,10 @@ int wmain(void) {
 	std::cin;
 	WSACleanup();
 	return 0;
+}
+
+int main() {
+	std::thread serverThread(&startServer);
+	std::cout << "Main thread" << std::endl;
+	serverThread.join();
 }
