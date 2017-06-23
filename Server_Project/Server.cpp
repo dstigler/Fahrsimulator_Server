@@ -94,7 +94,7 @@ int startServer()
 			
 			recv(AcceptSocket, recvBuffer, REVBUFFLEN, 0);
 			std::cout << "Received: " << std::string(recvBuffer) << std::endl;
-			if(std::string(recvBuffer).compare("send_points")){
+			if(std::string(recvBuffer).compare("send_points")== 0){
 				for (auto s : points) {
 					send(AcceptSocket, s.c_str(), s.length() + 1, MSG_OOB);
 				}
